@@ -1,0 +1,20 @@
+{
+  "name": "thrift-generator",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.1.2",
+    "handlebars": "^4.0.11",
+    "mkdirp": "^0.5.1",
+    "winston": "^3.0.0"
+  },
+  "bin": {
+    "thrift-generator": "./src/index.js"
+  }
+}
