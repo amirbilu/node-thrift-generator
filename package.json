@@ -1,10 +1,12 @@
 {
   "name": "thrift-generator",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example1": "thrift-generator --config=example/example1.json",
+    "example2": "thrift-generator --config=example/example2.json"
   },
   "author": "",
   "license": "ISC",
@@ -12,9 +14,12 @@
     "glob": "^7.1.2",
     "handlebars": "^4.0.11",
     "mkdirp": "^0.5.1",
+    "optimist": "^0.6.1",
     "winston": "^3.0.0"
   },
-  "bin": {
-    "thrift-generator": "./src/index.js"
+  "bin": "./bin/cli.js",
+  "repository" : {
+     "type" : "git",
+     "url" : "https://github.com/amirbilu/node-thrift-generator.git"
   }
 }

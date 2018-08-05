@@ -1,14 +1,14 @@
 {
   "thrift-generator": {
-    "verbose": "info",
+    "log": "debug",
     "generators": [
       {
         "languages": [
           "js:node",
           "java"
         ],
-        "idl": ".thrift",
-        "output": "./thrift"
+        "idl": "**/.thrift",
+        "output": "./dist"
       }
     ]
   }

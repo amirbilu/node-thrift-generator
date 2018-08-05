@@ -1,0 +1,17 @@
+{
+  "thrift-generator": {
+    "log": "debug",
+    "generators": [
+      {
+        "language": "java",
+        "idl": "example/.thrift",
+        "output": "./dist/java"
+      },
+      {
+        "language": "js:node",
+        "idl": "example/.thrift",
+        "output": "./dist/node"
+      }
+    ]
+  }
+}
