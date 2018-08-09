@@ -3,7 +3,7 @@
     "log": "debug",
     "generators": [
       {
-        "languages": [
+        "language": [
           "js:node",
           "java"
         ],

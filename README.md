@@ -23,7 +23,7 @@ An easy way to compile thrift idl files using simple configuration.
     "log": "debug",
     "generators": [
       {
-        "languages": [
+        "language": [
           "js:node",
           "java"
         ],

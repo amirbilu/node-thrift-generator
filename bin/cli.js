@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const Generator = require('../src');
-const logger = require('../src/logger');
 const argv = require('optimist').argv;
 const path = require('path');
 

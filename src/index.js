@@ -10,45 +10,47 @@ handlebars.registerHelper('gen', function(languages) {
     return languages.map((lang) => `--gen ${lang}`).join(' ');
 });
 
+
 const defaults = {
     idl: "**/*.thrift",
-    output: "./"
+    output: "./",
+    executable: "thrift",
 }
 
-function mkdirIfNotExists(dir) {
-    if (!fs.existsSync(dir))
-        mkdirp.sync(dir);
-}
-
-const thriftCli1 = handlebars.compile(`thrift {{gen languages}} -o {{output}} {{idl}}`);
-const thriftCli2 = handlebars.compile(`thrift --gen {{language}} -out {{output}} {{idl}}`);
-
+const thriftCli1 = handlebars.compile(`{{executable}} -v {{gen language}} -o {{output}} {{idl}}`);
+const thriftCli2 = handlebars.compile(`{{executable}} -v --gen {{language}} -out {{output}} {{idl}}`);
 
 module.exports = class {
     constructor(config) {
-        this.config = config;
-        this.logger = Logger(config.log || 'info');
+        const {executable, idl, output, generators, ignore, log} = {...defaults, ...config};
+        this.defaults = {executable, idl, output};
+
+        this.generators = generators;
+        this.ignore = ignore;
+        this.logger = Logger(log || 'info');
     }
     generate() {
-        this.config.generators.forEach(async generator => {
-            generator = {...defaults,
+        this.generators.forEach(async generator => {
+
+            generator = {
+                ...this.defaults,
                 ...generator
             };
-            mkdirIfNotExists(generator.output);
+
+            mkdirp.sync(generator.output);
 
             const idls = await glob(generator.idl, {
-                ignore: this.config.ignore
+                ignore: this.ignore
             });
 
-            let command = "";
             idls.forEach(async idl => {
-                if (generator.languages) {
+                let command = "";
+                if (Array.isArray(generator.language)) {
                     command = thriftCli1({...generator,
                         idl
                     });
                 }
-
-                if (generator.language) {
+                else if (typeof generator.language == "string") {
                     command = thriftCli2({...generator,
                         idl
                     });
@@ -56,11 +58,18 @@ module.exports = class {
 
                 this.logger.debug(command);
 
-                const {
-                    stdout,
-                    stderror
-                } = await exec(command);
+                try{
+                  const {
+                      stdout,
+                      stderror
+                  } = await exec(command);
 
+                    this.logger.debug(stdout);
+                }
+                catch(e){
+                    this.logger.error("exception while trying to generate thrift files");
+                    this.logger.debug(e);
+                }
             });
 
         });
