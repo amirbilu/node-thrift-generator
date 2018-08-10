@@ -45,4 +45,32 @@ An easy way to compile thrift idl files using simple configuration.
 ```
 
 # Configuration
-TBA
+## config.log
+Log level, can be 'info' or debug **(default: info)**
+
+## config.executable
+Thrift cli executable path **(default: thrift)**
+
+## config.ignore
+Array of glob patterns to ignore while searching for thrift idl files.
+
+
+## config.genereators
+Array of thrift genereation commands
+
+### genereator.language 
+Language to generate, can be a string or an array of languages
+
+### generator.idl
+Path to idl file/s. supports globbing **(default: \**/*.thrift)**
+
+### generator.output
+Output folder.
+If **generator.language** is an array, then files will be genereated at output/gen-\*,
+otherwise, files will be genereated at output (no gen-\* will be created).
+
+
+
+
+
+
